@@ -7,13 +7,14 @@
       </div>
     </div>
     {{data}}
-    <line-chart :chart-data="datacollection"></line-chart>
+    <line-chart class="line-chart" :chart-data="datacollection"></line-chart>
   </div>
 </template>
 
 <script>
   import LineChart from './LineChart.js'
   import dataService from '../api/data'
+  // const { decycle } = require('json-cyclic')
 
   export default {
     components: {
@@ -35,6 +36,7 @@
     },
     methods: {
       selectPrefecture() {
+        this.data.datasets = []
         for(let prefecture of this.prefectures){
           if(prefecture.select){
             dataService.getPopulation(prefecture.prefCode)
@@ -45,10 +47,10 @@
               for(let population of populations.data.result.data[0].data){
                 populationValue.push(population.value)
               }
+              console.log(prefecture.prefName)
               this.data.datasets.push({
                 label: prefecture.prefName,
                 data: populationValue,
-                backgroundColor: '#f87979',
               })
             })
           // }else{
@@ -78,5 +80,8 @@
 }
 .prefecture{
   width:calc(100% / 8);
+}
+.line-chart{
+  width:50%;
 }
 </style>

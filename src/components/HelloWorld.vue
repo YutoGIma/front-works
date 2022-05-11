@@ -6,7 +6,6 @@
         <label>{{prefecture.prefName}}</label>
       </div>
     </div>
-    {{data}}
     <line-chart class="line-chart" :chart-data="datacollection"></line-chart>
   </div>
 </template>
@@ -14,7 +13,7 @@
 <script>
   import LineChart from './LineChart.js'
   import dataService from '../api/data'
-  // const { decycle } = require('json-cyclic')
+  const { decycle } = require('json-cyclic')
 
   export default {
     components: {
@@ -35,38 +34,25 @@
       this.selectPrefecture()
     },
     methods: {
-      selectPrefecture() {
+      async selectPrefecture() {
         this.data.datasets = []
         for(let prefecture of this.prefectures){
           if(prefecture.select){
-            dataService.getPopulation(prefecture.prefCode)
-            .then(populations => {
-              console.log("yes")
-              console.log(populations.data.result.data[0].data)
-              let populationValue = []
-              for(let population of populations.data.result.data[0].data){
-                populationValue.push(population.value)
-              }
-              console.log(prefecture.prefName)
-              this.data.datasets.push({
-                label: prefecture.prefName,
-                data: populationValue,
-              })
+            let populations = await dataService.getPopulation(prefecture.prefCode)
+            let populationValue = []
+            for(let population of populations.data.result.data[0].data){
+              populationValue.push(population.value)
+            }
+            this.data.datasets.push({
+              label: prefecture.prefName,
+              data: populationValue,
             })
-          // }else{
-          //   this.data.datasets.push({
-          //       labels: "",
-          //       data: [],
-          //       backgroundColor: '#f87979',
-          //     })
           }
         }
-        console.log(this.data)
-        this.datacollection = this.data
+        this.datacollection = decycle(this.data)
       },
       async getPrefectures() {
         const prefectures = await dataService.getPregectures()
-        console.log(prefectures.data)
         this.prefectures = prefectures.data.result
       },
     }

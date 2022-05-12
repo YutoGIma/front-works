@@ -1,5 +1,6 @@
 <template>
   <div class="small">
+    <h1>都道府県人口比較グラフ</h1>
     <div class="prefecture-con">
       <div class="prefecture" v-for="prefecture in prefectures" :key="prefecture.prefCode">
         <input type="checkbox" v-model="prefecture.select" @change="selectPrefecture()"/>
@@ -60,6 +61,9 @@
 </script>
 
 <style>
+h1{
+  text-align: center;
+}
 .prefecture-con{
   display:flex;
   flex-wrap: wrap;
@@ -69,5 +73,6 @@
 }
 .line-chart{
   width:50%;
+  margin:0 auto;
 }
 </style>

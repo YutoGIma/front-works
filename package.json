@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "chart.js": "2.8",
+    "chartjs-plugin-colorschemes": "^0.4.0",
     "core-js": "^3.8.3",
     "json-cyclic": "^1.0.2",
     "vue": "^2.6.14",

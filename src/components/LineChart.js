@@ -1,4 +1,5 @@
 import { Line, mixins } from 'vue-chartjs'
+import 'chartjs-plugin-colorschemes'
 const { reactiveProp } = mixins
 
 export default {

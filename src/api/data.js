@@ -9,7 +9,7 @@ class getData {
     return Api().get("api/v1/prefectures");
   }
   /**
-   * 
+   *
    * @param  id prefCode
    * @param  prefCode 都道府県コード
    * @param  cityCode 市区町村コード("-")

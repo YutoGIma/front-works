@@ -29,6 +29,7 @@ import dataService from "../api/data";
 const { decycle } = require("json-cyclic");
 
 export default {
+  name: "BasePage",
   components: {
     LineChart,
   },
@@ -70,6 +71,7 @@ export default {
     this.selectPrefecture();
   },
   methods: {
+    /** チェックのついた都道府県の人口を取得し、チャート用にデータを形成 */
     async selectPrefecture() {
       this.data.datasets = [];
       for (let prefecture of this.prefectures) {
@@ -89,6 +91,7 @@ export default {
       }
       this.datacollection = decycle(this.data);
     },
+    /** 当道府県のデータを取得しリスト表示 */
     async getPrefectures() {
       const prefectures = await dataService.getPregectures();
       this.prefectures = prefectures.data.result;

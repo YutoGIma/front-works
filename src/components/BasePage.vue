@@ -15,6 +15,7 @@
         <label>{{ prefecture.prefName }}</label>
       </div>
     </div>
+    <button class="resetButton" @click="chartReset">リセット</button>
     <line-chart
       class="line-chart"
       :chart-data="datacollection"
@@ -96,6 +97,13 @@ export default {
       const prefectures = await dataService.getPregectures();
       this.prefectures = prefectures.data.result;
     },
+    chartReset() {
+      this.data.datasets = [];
+      for (let prefecture of this.prefectures) {
+        prefecture.select = false;
+      }
+      this.datacollection = this.data;
+    },
   },
 };
 </script>
@@ -103,21 +111,40 @@ export default {
 <style>
 h1 {
   text-align: center;
+  margin: 0;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  background-color: #c4c4c4;
 }
 .prefecture-con {
   display: flex;
   flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
 }
 .prefecture {
-  width: calc(100% / 8);
+  width: calc(100% / 8 - 20px);
+  margin: 0 10px;
+  text-align: left;
 }
 .line-chart {
   width: 50%;
   margin: 0 auto;
 }
+.resetButton {
+  width: 240px;
+  border: none;
+  color: #fff;
+  background-color: #31475b;
+  border-radius: 20px;
+  padding: 10px 0;
+  margin: 10px 0;
+  cursor: pointer;
+}
 @media screen and (max-width: 1080px) {
   .prefecture {
-    width: calc(100% / 6);
+    width: calc(100% / 6 - 20px);
+    margin: 0 10px;
   }
   .line-chart {
     width: 70%;
@@ -125,8 +152,12 @@ h1 {
   }
 }
 @media screen and (max-width: 840px) {
+  .prefecture-con {
+    width: 100%;
+  }
   .prefecture {
     width: calc(100% / 4);
+    margin: 0;
   }
   .line-chart {
     width: 90%;
